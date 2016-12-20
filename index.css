@@ -1,0 +1,16 @@
+#myRover {
+  height: 64;
+  width: 64;
+  position: relative;
+  left: -724;
+  bottom: 656;
+  z-index: 1;
+}
+
+#grid {
+  height: 730;
+  width: 730;
+  position: relative;
+  top: 0;
+  z-index: 0;
+}
