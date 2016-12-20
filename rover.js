@@ -1,24 +1,28 @@
 var myRover = {
   direction: "Start",
-  get image () {  //string:path to the image
-    return document.getElementById("myRover").src;
-  },
+
+  _image: "Start.png",
+  get image () { return this._image; },
   set image (path) {
     document.getElementById("myRover").src = path;
+    this._image = path;
   },
-  get x () {      //int:x-position
-    return document.getElementById("myRover").left;
-  },
+
+  _x: parseInt(window.getComputedStyle(document.getElementById("myRover")).left.replace('p','').replace('x','')),
+  _y: parseInt(window.getComputedStyle(document.getElementById("myRover")).bottom.replace('p','').replace('x','')),
+  get x () { return this._x; },
   set x (newX) {
-    document.getElementById("myRover").left = newX + "px";
+    if      (newX > -76) { newX = -724; }
+    else if (newX < -724) { newX = -76; }
+    document.getElementById("myRover").style.left = newX;
+    this._x = newX;
   },
-  get y () {      //int:y-position
-    console.log("y is  " + document.getElementById("myRover").style.bottom);
-    return document.getElementById("myRover").style.bottom.slice(0,-2);
-  },
+  get y () { return this._y; },
   set y (newY) {
-    console.log("Registered " + newY.toString() + "px");
-    document.getElementById("myRover").bottom = newY + "px"; //"px" not needed?
+    if      (newY > 656) { newY = 8; }
+    else if (newY < 8) { newY = 656; }
+    document.getElementById("myRover").style.bottom = newY;
+    this._y = newY;
   }
 };
 
@@ -36,24 +40,26 @@ function move(rover, inputDirection) {
     rover.image = "images/" + inputDirection + ".png";
   }
   else {
-    console.log("Here");
     switch(inputDirection) {
       case 'N':
       rover.y += 72;
-      console.log("Logged North");
       break;
       case 'E':
+      myRover.image = "images/Moving-E.png";
       rover.x += 72;
       break;
       case 'S':
       rover.y -= 72;
       break;
       case 'W':
+      myRover.image = "images/Moving-W.png";
       rover.x -= 72;
       break;
     }
   }
 }
+
+document.onkeyup = inputCommand;
 
 var directions = ["W", "N", "E", "S"];
 
@@ -63,5 +69,3 @@ function inputCommand(e) {
     move(myRover, directions[code - 37]);
   }
 }
-
-document.onkeyup = inputCommand;
