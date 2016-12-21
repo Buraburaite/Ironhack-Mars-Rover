@@ -27,34 +27,42 @@ var myRover = {
 };
 
 function move(rover, inputDirection) {
-  if (rover.direction == "W" && inputDirection == "E"){
-    rover.direction = "E";
-    rover.image = "images/From-W-Turn-E.png";
+
+  if (inputDirection.length > 1){
+    for (var i = 0; i < inputDirection.length; i++){
+      move(rover, inputDirection[i]);
+    }
   }
-  else if (rover.direction == "E" && inputDirection == "W") {
-    rover.direction = "W";
-    rover.image = "images/From-E-Turn-W.png";
-  }
-  else if (rover.direction != inputDirection){
-    rover.direction = inputDirection;
-    rover.image = "images/" + inputDirection + ".png";
-  }
-  else {
-    switch(inputDirection) {
-      case 'N':
-      rover.y += 72;
-      break;
-      case 'E':
-      myRover.image = "images/Moving-E.png";
-      rover.x += 72;
-      break;
-      case 'S':
-      rover.y -= 72;
-      break;
-      case 'W':
-      myRover.image = "images/Moving-W.png";
-      rover.x -= 72;
-      break;
+  else{
+    if (rover.direction == "W" && inputDirection == "E"){
+      rover.direction = "E";
+      rover.image = "images/From-W-Turn-E.png";
+    }
+    else if (rover.direction == "E" && inputDirection == "W") {
+      rover.direction = "W";
+      rover.image = "images/From-E-Turn-W.png";
+    }
+    else if (rover.direction != inputDirection){
+      rover.direction = inputDirection;
+      rover.image = "images/" + inputDirection + ".png";
+    }
+    else {
+      switch(inputDirection) {
+        case 'N':
+        rover.y += 72;
+        break;
+        case 'E':
+        myRover.image = "images/Moving-E.png";
+        rover.x += 72;
+        break;
+        case 'S':
+        rover.y -= 72;
+        break;
+        case 'W'.ignoreCase:
+        myRover.image = "images/Moving-W.png";
+        rover.x -= 72;
+        break;
+      }
     }
   }
 }
@@ -68,4 +76,11 @@ function inputCommand(e) {
   if (code > 36 && code < 41){
     move(myRover, directions[code - 37]);
   }
+}
+
+function multiInput(){
+  var text = document.getElementById("text-input").value;
+  console.log(text.length);
+
+  move(myRover, text);
 }
